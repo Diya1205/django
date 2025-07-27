@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AJAX Doctor CRUD</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+    <h2>Add Doctor (AJAX)</h2>
+    <form id="addDoctorForm">
+        {% csrf_token %}
+        Name: <input type="text" name="name" required><br>
+        Specialty: <input type="text" name="specialty" required><br>
+        Contact: <input type="text" name="contact" required><br>
+        <button type="submit">Add Doctor</button>
+    </form>
+
+    <hr>
+
+    <h2>Doctors List</h2>
+    <table border="1">
+        <tr>
+            <th>Name</th>
+            <th>Specialty</th>
+            <th>Contact</th>
+        </tr>
+        {% for doctor in doctors %}
+        <tr>
+            <td>{{ doctor.name }}</td>
+            <td>{{ doctor.specialty }}</td>
+            <td>{{ doctor.contact }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <script>
+        // Setup CSRF token globally
+        $.ajaxSetup({
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        });
+
+        // Submit form using AJAX
+        $('#addDoctorForm').on('submit', function(e){
+            e.preventDefault();
+
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'ajax_doctor_add' %}",
+                data: $(this).serialize(),
+                success: function(data) {
+                    if (data.status === 'success') {
+                        location.reload(); // Reload to see new entry
+                    } else {
+                        alert("Error occurred");
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

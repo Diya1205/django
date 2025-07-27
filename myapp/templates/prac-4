@@ -1,0 +1,51 @@
+# myproject/
+# ├── manage.py
+# ├── myproject/
+# │   ├── __init__.py
+# │   ├── settings.py
+# │   ├── urls.py
+# │   ├── asgi.py
+# │   └── wsgi.py
+# └── myapp/
+#     ├── __init__.py
+#     ├── admin.py
+#     ├── apps.py
+#     ├── models.py
+#     ├── tests.py
+#     ├── views.py
+#     ├── urls.py
+#     ├── templates/
+#     └── static/
+
+# Description of Core Files:
+# --------------------------
+
+# manage.py
+# Entry point to manage your Django project from the command line.
+
+# myproject/settings.py
+# Project settings: DB, apps, templates, static files, etc.
+
+# myproject/urls.py
+# Root URL router — includes app URLs.
+
+# myproject/wsgi.py / asgi.py
+# Interfaces to serve the project on web servers (production).
+
+# myapp/views.py
+# Python functions that handle user requests and return responses.
+
+# myapp/urls.py
+# URL patterns specific to `myapp`.
+
+# myapp/models.py
+# Defines the structure of your database tables.
+
+# myapp/templates/
+# Stores HTML files for rendering views.
+
+# myapp/static/
+# Stores CSS, JavaScript, and image files.
+
+# myapp/admin.py
+# Configuration for Django admin interface.

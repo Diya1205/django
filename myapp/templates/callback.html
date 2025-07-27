@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head><title>Payment Status</title></head>
+<body>
+    <h2>Payment Status</h2>
+    {% if response %}
+        <p>Order ID: {{ response.ORDERID }}</p>
+        <p>Transaction ID: {{ response.TXNID }}</p>
+        <p>Status: {{ response.STATUS }}</p>
+        <p>Amount: ₹{{ response.TXNAMOUNT }}</p>
+    {% elif error %}
+        <p>Error: {{ error }}</p>
+    {% endif %}
+</body>
+</html>

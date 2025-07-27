@@ -1,0 +1,20 @@
+# Ignore virtual environment
+myenv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Database
+db.sqlite3
+
+# Environment files
+.env
+
+# VSCode / PyCharm files
+.vscode/
+.idea/
+
+# Static/media if needed
+/staticfiles/
+/media/

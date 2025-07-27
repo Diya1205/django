@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Patient Registration</title>
+    <script>
+        function validateForm() {
+            const email = document.forms["regForm"]["email"].value;
+            const phone = document.forms["regForm"]["phone"].value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const phoneRegex = /^[0-9]{10}$/;
+
+            if (!emailRegex.test(email)) {
+                alert("Invalid email format");
+                return false;
+            }
+            if (!phoneRegex.test(phone)) {
+                alert("Phone number must be 10 digits");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <h2>Patient Registration Form</h2>
+    <form name="regForm" action="#" onsubmit="return validateForm()">
+        <label>Name:</label>
+        <input type="text" name="name" required><br><br>
+
+        <label>Email:</label>
+        <input type="text" name="email" required><br><br>
+
+        <label>Phone:</label>
+        <input type="text" name="phone" required><br><br>
+
+        <button type="submit">Register</button>
+    </form>
+</body>
+</html>
