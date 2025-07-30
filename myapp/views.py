@@ -2,8 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import SignUpForm, UserUpdateForm
-from django.conf import settings
-from .paytm import checksum
+from django.conf import settings  
 from django.views.decorators.csrf import csrf_exempt
 
 
@@ -58,36 +57,3 @@ def profile_view(request):
     else:
         form = UserUpdateForm(instance=request.user)
     return render(request, 'profile.html', {'form': form})
-
-def initiate_payment(request):
-    if request.method == "POST":
-        amount = request.POST.get('amount')
-        order_id = "ORDERID" + str(checksum.__time_stamp__())
-        
-        data = {
-            'MID': settings.PAYTM_MERCHANT_ID,
-            'ORDER_ID': order_id,
-            'TXN_AMOUNT': str(amount),
-            'CUST_ID': 'CUST001',
-            'INDUSTRY_TYPE_ID': settings.PAYTM_INDUSTRY_TYPE_ID,
-            'WEBSITE': settings.PAYTM_WEBSITE,
-            'CHANNEL_ID': settings.PAYTM_CHANNEL_ID,
-            'CALLBACK_URL': settings.PAYTM_CALLBACK_URL,
-        }
-        data['CHECKSUMHASH'] = checksum.generate_checksum(data, settings.PAYTM_MERCHANT_KEY)
-        return render(request, 'payment.html', {'paytm_dict': data})
-    return render(request, 'payment.html')
-
-@csrf_exempt
-def callback(request):
-    if request.method == "POST":
-        received_data = dict(request.POST)
-        paytm_params = {}
-        paytm_checksum = received_data['CHECKSUMHASH'][0]
-        for key, value in received_data.items():
-            paytm_params[key] = str(value[0])
-        is_valid_checksum = checksum.verify_checksum(paytm_params, settings.PAYTM_MERCHANT_KEY, paytm_checksum)
-        if is_valid_checksum:
-            return render(request, 'callback.html', {'response': paytm_params})
-        else:
-            return render(request, 'callback.html', {'error': 'Checksum verification failed'})

@@ -10,4 +10,5 @@ urlpatterns = [
     path('ajax-doctors/add/', views.ajax_doctor_add, name='ajax_doctor_add'),
     path('ajax-doctors/update/<int:pk>/', views.ajax_doctor_update, name='ajax_doctor_update'),
     path('ajax-doctors/delete/<int:pk>/', views.ajax_doctor_delete, name='ajax_doctor_delete'),
+    path('map/', views.doctor_map, name='doctor_map'),
 ]

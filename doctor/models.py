@@ -8,6 +8,7 @@ class Doctor(models.Model):
     specialty = models.CharField(max_length=100)
     contact = models.CharField(max_length=50)
     availability = models.CharField(max_length=100)
-
+    latitude = models.FloatField()
+    longitude = models.FloatField()
     def __str__(self):
         return self.name

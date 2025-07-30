@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Doctor
 from .forms import DoctorForm
 from django.http import JsonResponse
-
+from django.conf import settings  
 
 def doctor_list(request):
     doctors = Doctor.objects.all()
@@ -64,3 +64,12 @@ def ajax_doctor_delete(request, pk):
     doctor = get_object_or_404(Doctor, pk=pk)
     doctor.delete()
     return JsonResponse({'status': 'deleted'})
+
+
+def doctor_map(request):
+    doctors = Doctor.objects.all().values('name', 'specialty', 'latitude', 'longitude')
+    return render(request, 'doctor_map.html', {
+        'google_maps_api_key': settings.GOOGLE_MAPS_API_KEY,
+        'doctors': list(doctors)  # convert QuerySet to list for JSON safety
+    })
+
